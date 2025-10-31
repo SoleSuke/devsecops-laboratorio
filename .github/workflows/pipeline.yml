@@ -17,7 +17,7 @@ jobs:
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
     - name: Run SonarQube Scan
-      uses: SonarSource/sonarqube-scan-action@v4.2.2
+      uses: SonarSource/sonarqube-scan-action@v6
 #      with:
 #        # Additional arguments to the Sonar Scanner CLI
 #        args: # optional
