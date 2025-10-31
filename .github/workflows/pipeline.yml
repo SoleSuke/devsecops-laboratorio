@@ -25,8 +25,8 @@ jobs:
       - name: Run SonarQube Scan
         uses: sonarsource/sonarqube-scan-action@master
         env:
-          SONAR_TOKEN: ${secrets.SONAR_TOKEN}
-#      with:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+#        with:
 #        # Additional arguments to the Sonar Scanner CLI
 #        args: # optional
 #        # Set the sonar.projectBaseDir analysis property
