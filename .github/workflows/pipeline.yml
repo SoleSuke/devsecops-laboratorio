@@ -9,12 +9,12 @@ on:
 jobs:
 
   build:
-
+    name: Build and Check Image
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v4
-    - name: Build the Docker image
+    - name: Build the Docker image 
       run: docker build . --file Dockerfile --tag devsecops-app:${{ github.sha }}
       
     - name: Run Trivy vulnerability scanner
@@ -47,7 +47,7 @@ jobs:
 #        scannerBinariesUrl: # optional, default is https://binaries.sonarsource.com/Distribution/sonar-scanner-cli
   depchecktest:
     runs-on: ubuntu-latest
-    name: depecheck_test
+    name: Run Dependency Check Test (SCA)
     steps:
       -  uses: actions/checkout@v4
       - name: Depcheck
@@ -56,7 +56,7 @@ jobs:
         with:
           project: 'test'
           path: '.'
-          format: 'HTML'
+          format: 'ALL'
           out: 'reports' # this is the default, no need to specify unless you wish to override it
           args: >
             --failOnCVSS 4 
