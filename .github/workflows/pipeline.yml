@@ -36,15 +36,18 @@ jobs:
         uses: sonarsource/sonarqube-scan-action@master
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-#        with:
-#        # Additional arguments to the Sonar Scanner CLI
-#        args: # optional
-#        # Set the sonar.projectBaseDir analysis property
-#        projectBaseDir: # optional
-#        # Version of the Sonar Scanner CLI to use
-#        scannerVersion: # optional, default is 6.2.1.4610
-#        # URL to download the Sonar Scanner CLI binaries from
-#        scannerBinariesUrl: # optional, default is https://binaries.sonarsource.com/Distribution/sonar-scanner-cli
+      - name: SonarQube Quality Gate check
+        id: sonarqube-quality-gate-check
+        uses: sonarsource/sonarqube-quality-gate-action@master
+        with:
+          pollingTimeoutSec: 300
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+      # Optionally you can use the output from the Quality Gate in another step.
+      # The possible outputs of the `quality-gate-status` variable are `PASSED`, `WARN` or `FAILED`.
+      - name: SonarQube Quality Gate Status value
+        run: echo "The Quality Gate status is ${{ steps.sonarqube-quality-gate-check.outputs.quality-gate-status }}"
   depchecktest:
     runs-on: ubuntu-latest
     name: Run Dependency Check Test (SCA)
